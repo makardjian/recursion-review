@@ -16,11 +16,11 @@ describe('getElementsByClassName', function() {
       var $rootElement = $(htmlString);
       $('body').append($rootElement);
 
-      var result = getElementsByClassName('targetClassName');
-      var expectedNodeList = document.getElementsByClassName('targetClassName');
+      var result = getElementsByClassName('targetClassName'); //invokes the function we wrote by passing in 'targetClassName' as an arg
+      var expectedNodeList = document.getElementsByClassName('targetClassName'); //uses native getElementsByClassName to return target eles
       var expectedArray = Array.prototype.slice.apply(expectedNodeList);
-      var equality = _.isEqual(result, expectedArray); // why can't we use `===` here?
-      expect(equality).to.equal(FILL_ME_IN);
+      var equality = _.isEqual(result, expectedArray); // why can't we use `===` here? --> these are different objects in memory.
+      expect(equality).to.equal(true);
 
       $rootElement.remove();
     });

@@ -5,7 +5,21 @@
 
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className) {
-  // your code here
+  var classes = [];
+
+  var getClasses = function(node) {
+    if (node.classList && node.classList.contains(className)) {
+      classes.push(node)
+    }
+    
+    if (node.childNodes) {
+      node.childNodes.forEach(function(ele) {
+      getClasses(ele)})
+    }
+  }
+  
+  getClasses(document.body);
+  return classes;
 };
 
 /*
@@ -28,3 +42,4 @@ pseudocode:
 
 
 */
+
