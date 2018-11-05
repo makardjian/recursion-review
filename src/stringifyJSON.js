@@ -4,42 +4,74 @@
 // but you don't so you're going to write it from scratch:
 
 var stringifyJSON = function(obj) {
-  if (obj === {}) {
-    return '{}';
-  }
+  console.log(obj);
+  // if (obj == {}) {
+  //   return '{}';
+  // }
   
   if (obj === undefined) {
     return undefined;
   }
   
+  if (obj === null) {
+    return "null";
+  }
+
+  // if (obj === []) {
+  //   return "[]";
+  // }
+
   if (typeof obj === "string") {
-    return "'" + obj + "'";
+    return '"' + obj + '"';
   }
   
   if (typeof obj === "boolean") {
-    return "'" + obj + "'";
+    return obj.toString();
   }
 
   if (typeof obj === "number") {
-    return "'" + obj + "'";
+    return obj.toString();
   }
 
   if (Array.isArray(obj)) {
+    if (obj.length === 0) {
+      return "[]";
+    }
+    
     var result = "[";
     obj.forEach(function(ele) {
-      if (ele === undefined || typeof(ele) === "function") {
+      if (ele === undefined || typeof(ele) === "function" || ele === {}) {
         result += "null, ";
       } else {
-        result += stringifyJSON(ele) + ", ";
+        result += stringifyJSON(ele) + ",";
       }
       
     });
-    result = result.slice(0, result.length -2);
+    result = result.slice(0, result.length -1);
     result += "]";
     return result; 
   }
 
-  
+  if (typeof(obj) === "object") {
+    if (Object.keys(obj).length === 0) {
+      return "{}"
+    }
+    var result = "{";
+    for (var key in obj) {
+      if (key === undefined) {
+        return "{}";
+      }
+        
+      if (typeof obj[key] === "function") {
+        return "{}";
+      } 
+
+      result += '"' + key + '":' + stringifyJSON(obj[key]) +',';
+    }
+    result = result.slice(0, result.length -1);
+    result += "}";
+    return result;
+  }
 
   
 };
